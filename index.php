@@ -1,3 +1,31 @@
+<html ng-app="webApp">
+<head>
+	<title>Sus Finanzas SAS</title>
+	<!-- CSS Styles -->
+	<link rel="stylesheet" type="text/css" href="client/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="client/integrated/bootstrap/css/bootstrap.min.css">
+	<!-- Javascript Libraries -->
+	<script type="text/javascript" src="client/js/jquery.min.js"></script>
+	<script type="text/javascript" src="client/integrated/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="client/js/angular.min.js"></script>
+	<script type="text/javascript" src="client/js/angular-bootstrap.min.js"></script>		
+	<script type="text/javascript" src="client/js/angular-ui.min.js"></script>
+	<script type="text/javascript" src="client/js/i18n/angular-locale_es-co.js"></script>
+
+	<script type="text/javascript" src="client/app.js"></script>
+
+	<script type="text/javascript">
+		$(document).on('ready', function(){
+
+		});
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>
+
 <?php
 
 /*
