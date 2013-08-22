@@ -1,0 +1,176 @@
+<div ng-controller="CreditAnalysisCtrl">
+	<div class="row-fluid">
+		<div class="span9">	
+			<form class="form-horizontal" class="span8">
+			  <fieldset>
+			    <legend>Análisis de Credito</legend>
+			  </fieldset>
+			  	<div class="control-group">
+				 	<label class="control-label" for="numeroCredito">Banco</label>	
+				 	<div class="controls">		 				 	
+				 		<select name="banco" id="banco">
+				 			<option value="">SELECCIONE UN BANCO...</option>
+				 			<option value="">BANCO DE BOGOTÁ</option>
+				 			<option value="">BANCOLOMBIA</option>
+				 			<option value="">DAVIVIENDA</option>
+				 			<option value="">BANCO AVVILLAS</option>
+				 		</select>
+				 	</div>			 	
+			 	 </div>  
+				 <div class="control-group">
+				 	<label class="control-label" for="numeroCredito">Número de Crédito</label>	
+				 	<div class="controls">		 				 	
+				 		<input class="span8" name="numeroCredito" id="numeroCredito" type="text" placeholder="Número de Crédito..." />
+				 	</div>			 			 	
+			 	 </div>
+			 	 <div class="control-group form-inline">
+			 	 	<label class="control-label" for="numeroCredito">Saldo del Crédito</label>	
+				 	<div class="controls">	
+				 		<div class="input-prepend">
+				 		   <span class="add-on">$</span>				 	
+				 		   <input class="span10" name="saldoCredito" id="saldoCredito" type="text" placeholder="Saldo del Crédito..." ng-model="datosAnalisis.saldoCredito" />
+				 		</div>
+				 		<div class="input-append">					  
+						  <input class="input-small" name="tasaInteresEA" id="tasaInteresEA" type="text" placeholder="Tasa EA..." ng-change="calcularTasaInteresMensual()" ng-model="datosAnalisis.tasaInteresEA" />
+						  <span class="add-on">%</span>
+						</div>
+						<div class="input-append" ng-show="verTasaInteresMensual()">					  
+						  <input class="input-small" name="tasaInteresMensual" id="tasaInteresMensual" type="text" placeholder="Tasa Mensual ..." ng-model="datosAnalisis.tasaInteresMensual" ng-readonly="true" />
+						  <span class="add-on">%</span>
+						</div>	 		
+				 	</div>			 	
+			 	 </div>
+			 	 <div class="control-group form-inline">
+				 	<label class="control-label" for="numeroCredito">Valor Seguros</label>
+				 	<div class="controls">	
+					 	<div class="input-prepend">
+					 		<span class="add-on">$</span>
+					 		<input class="input-medium" name="valorSeguros" id="valorSeguros" type="text" placeholder="Valor Seguros ..." />
+					 	</div>
+					</div>		 		 			 	
+			 	 </div>
+			 	 <div class="control-group form-inline">
+				 	<label class="control-label" for="numeroCredito">Cuotas</label>
+				 	<div class="controls">	
+					 	<div class="input-prepend">
+					 		<span class="add-on">$</span>
+					 		<input class="input-medium" name="valorCuota" id="valorCuota" type="text" placeholder="Valor Cuotas ..." ng-model="datosAnalisis.valorCuota"/>
+					 	</div>
+					 	<input class="input-medium" name="nCuotasPendientes" id="nCuotasPendientes" type="text" placeholder="No Cuotas Pendientes..." ng-model="datosAnalisis.nCuotas" ng-change="calcularTiempoReal()" />
+					 	{{datosAnalisis.tiempoReal}}
+					</div>		 		 			 	
+			 	 </div>
+			 	 <div class="control-group form-inline">
+				 	<label class="control-label" for="numeroCredito">Beneficio de Cobertura</label>
+				 	<div class="controls">	
+					 	<div class="input-prepend">
+					 		<span class="add-on">$</span>
+					 		<input class="input-medium" name="coberturaTasa" id="coberturaTasa" type="text" placeholder="Valor Cobertura ..." ng-model="datosAnalisis.coberturaTasa" />
+					 	</div>
+					</div>		 		 			 	
+			 	 </div>
+			 	 <div class="control-group form-inline">
+				 	<label class="control-label" for="numeroCredito">Ingresos Mensuales</label>
+				 	<div class="controls">	
+					 	<div class="input-prepend">
+					 		<span class="add-on">$</span>
+					 		<input class="input-medium" name="ingresosMensuales" id="ingresosMensuales" type="text" placeholder="Ingresos Mensuales ..." ng-model="datosAnalisis.ingresosMensuales" ng-change="calcularCuotaMaxima()" />
+					 	</div>
+					 	Maxima Cuota = <strong> $ {{datosAnalisis.cuotaMaxima | number:2}}</strong>
+					</div>		 		 			 	
+			 	 </div>
+			 	 <div class="control-group form-inline">
+				 	<label class="control-label" for="numeroCredito">Incremento Maximo</label>
+				 	<div class="controls">	
+					 	<div class="input-prepend">
+					 		<span class="add-on">$</span>
+					 		<input class="input-medium" name="incrementoMaximo" id="incrementoMaximo" type="text" placeholder="Incremento Maximo ..." ng-model="datosAnalisis.incrementoMaximo" />
+					 	</div>
+					</div>
+					<div class="control-group form-inline" ng-show="datosAnalisis.incrementoMaximo > 0 && datosAnalisis.valorCuota > 0" ng-change="calcularOpcionesCuotas()"> 
+					 	Total Cuota + Incremento - B. Cobertura =  $ {{datosAnalisis.valorCuota | number:2}} + $ {{datosAnalisis.incrementoMaximo | number:2}} - $ {{datosAnalisis.coberturaTasa | number:2}} = <strong>$ {{totalCuotaIncrementada | number:2}}</strong>	 		 	
+			 	 	</div>
+			</form>
+		</div>
+	</div>
+	<div class="row-fluid" ng-show="verTablaAnalisis()">	
+		<table class="table">
+			<tr>
+				<th>&nbsp;</th>
+				<th>Tiempo Actual</th>
+				<th>Opción No. 2</th>
+				<th>Opción No. 3</th>
+				<th>Opción No. 4</th>
+				<th>Opción No. 5</th>
+			</tr>
+			<tr>
+				<th>Cuotas Pendientes</th>
+				<td align="center">{{datosAnalisis.nCuotas}}</td>
+				<td align="center">{{datosAnalisis.nCuotas - 12}}</td>
+				<td align="center">{{datosAnalisis.nCuotas - 24}}</td>
+				<td align="center">{{datosAnalisis.nCuotas - 36}}</td>
+				<td align="center">{{datosAnalisis.nCuotas - 48}}</td>
+			</tr>
+			<tr>
+				<th>Reducciones</th>
+				<td>{{datosAnalisis.tiempoReal}}</td>
+				<td>{{datosAnalisis.reduccion1}}</td>
+				<td>{{datosAnalisis.reduccion2}}</td>
+				<td>{{datosAnalisis.reduccion3}}</td>
+				<td>{{rdatosAnalisis.educcion4}}</td>
+			</tr>
+			<tr>
+				<th>Incremento Cuota</th>
+				<td></td>
+				<td>{{datosAnalisis.cuotaOpcion1}}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>		
+			<tr>
+				<th>Vr. Cuota Sin Seguro $</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>Valor cuota total</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>Cobertura de Tasa</th>
+				<td colspan="5" align="center"><center>${{datosAnalisis.coberturaTasa}}</center></td>
+			</tr>
+			<tr>
+				<th>Pago Cliente</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>Total por Pagar Aprox. $</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<th>No. Veces Pagado</th>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+</div>

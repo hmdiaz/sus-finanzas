@@ -1,0 +1,5 @@
+$httpBackend
+
+Es un servicio de Angular que simula peticiones Backend Falsas con el fin de realizas pruebas.
+
+Durante las pruebas, nosotros queremos arrancar rapidamente nuestras pruebas unitarias y no tener dependencias externas, asi que no queremos enviar peticiones XHR o JSON al servidor real. Todo lo que necesitamos para verificar si determinada peticion fue enviada o no, o simplemente dejar que la aplicación haga peticiones y comprobar que el resultado sea lo que esperamos que sea.
