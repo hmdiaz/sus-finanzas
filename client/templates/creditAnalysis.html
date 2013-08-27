@@ -45,7 +45,7 @@
 				 	<div class="controls">	
 					 	<div class="input-prepend">
 					 		<span class="add-on">$</span>
-					 		<input class="input-medium" name="valorSeguros" id="valorSeguros" type="text" placeholder="Valor Seguros ..." />
+					 		<input class="input-medium" name="valorSeguros" id="valorSeguros" type="text" placeholder="Valor Seguros ..." ng-model="datosAnalisis.valorSeguros" />
 					 	</div>
 					</div>		 		 			 	
 			 	 </div>
@@ -98,10 +98,10 @@
 			<tr>
 				<th>&nbsp;</th>
 				<th>Tiempo Actual</th>
+				<th>Opción No. 1</th>
 				<th>Opción No. 2</th>
 				<th>Opción No. 3</th>
 				<th>Opción No. 4</th>
-				<th>Opción No. 5</th>
 			</tr>
 			<tr>
 				<th>Cuotas Pendientes</th>
@@ -117,23 +117,23 @@
 				<td>{{datosAnalisis.reduccion1}}</td>
 				<td>{{datosAnalisis.reduccion2}}</td>
 				<td>{{datosAnalisis.reduccion3}}</td>
-				<td>{{rdatosAnalisis.educcion4}}</td>
+				<td>{{datosAnalisis.reduccion4}}</td>
 			</tr>
 			<tr>
 				<th>Incremento Cuota</th>
 				<td></td>
-				<td>{{datosAnalisis.cuotaOpcion1}}</td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 12) - datosAnalisis.valorCuota | number:2}}</td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 24) - datosAnalisis.valorCuota | number:2}}</td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 36) - datosAnalisis.valorCuota | number:2}}</td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 48) - datosAnalisis.valorCuota | number:2}}</td>
 			</tr>		
 			<tr>
 				<th>Vr. Cuota Sin Seguro $</th>
 				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 12) | number:2}}</td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 24) | number:2}}</td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 36) | number:2}}</td>
+				<td>${{CalcularIncrementoCuota(datosAnalisis.nCuotas - 48) | number:2}}</td>
 			</tr>
 			<tr>
 				<th>Valor cuota total</th>
@@ -150,7 +150,7 @@
 			<tr>
 				<th>Pago Cliente</th>
 				<td></td>
-				<td></td>
+				<td>${{(CalcularIncrementoCuota(datosAnalisis.nCuotas - 12) + valorSeguro) | number:2}}</td>
 				<td></td>
 				<td></td>
 				<td></td>

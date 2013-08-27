@@ -9,7 +9,8 @@ susFinanzasApp.controller('CreditAnalysisCtrl', function($scope){
 		cuotaMaxima: 0, 
 		valorCuota: 0.00,
 		incrementoMaximo: 0.00,
-		coberturaTasa: 0.00
+		coberturaTasa: 0.00,
+		valorSeguro: 0.00
 	};
 		
 	$scope.verTasaInteresMensual = function()
@@ -39,11 +40,6 @@ susFinanzasApp.controller('CreditAnalysisCtrl', function($scope){
 		$scope.datosAnalisis.reduccion4 = (anios - 4) + ' Años ' + meses + ' Meses';	
 	};
 	
-	$scope.calcularOpcionesCuotas = function()
-	{
-		$scope.datosAnalisis.cuotaOpcion1 = ($scope.datosAnalisis.saldoCredito * $scope.datosAnalisis.tasaInteresMensual) / Math.pow((1 - (1 - $scope.datosAnalisis.tasaInteresMensual), datosAnalisis.nCuotas - 12));
-	};
-	
 	$scope.calcularCuotaMaxima = function()
 	{
 		$scope.datosAnalisis.cuotaMaxima = parseFloat($scope.datosAnalisis.ingresosMensuales) * 0.30;
@@ -58,5 +54,13 @@ susFinanzasApp.controller('CreditAnalysisCtrl', function($scope){
 		$scope.totalCuotaIncrementada = parseFloat(newValue[0]) + parseFloat(newValue[1]) - parseFloat(newValue[2]);		
 	    $scope.superaCuotaMaxima = $scope.totalCuotaIncrementada > $scope.datosAnalisis.cuotaMaxima;
 	});
+	
+	$scope.CalcularIncrementoCuota = function (nCuotas) {
+		debugger;
+	  var tasa = $scope.datosAnalisis.tasaInteresMensual / 100;
+	  return Math.round(($scope.datosAnalisis.saldoCredito * tasa) / (1 - Math.pow((1 + tasa), (-1) * nCuotas)), 2);
+	}
+	
+	 
 	
 });
